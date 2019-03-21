@@ -3,17 +3,6 @@ require_relative "tile"
 
 class Board
 
-    def initialize(size)
-        debugger 
-        @grid = Board.create_grid(size)
-        @tiles = create_tiles(@grid)
-    end 
-
-    def [](pos)
-        x, y = pos 
-        @grid[x][y]
-    end 
-
     def self.create_grid(size)
         empty_grid = Array.new(size) {Array.new(size)}
         Board.rand_bomb_placement(empty_grid)
@@ -35,8 +24,6 @@ class Board
 
     def self.nums_dashes_to_grid(populated_grid)
         board = populated_grid
-        # if r, c, and d surrounding position does not equal "*" then p = "_"
-        # if r, c, or d has "*" then ticker adds 1 and position equals ticker 
         board.each_with_index do |subArr, row|
             subArr.each_with_index do |ele, col|
                 if board[row][col] != "*"
@@ -45,7 +32,6 @@ class Board
                 end 
             end 
         end 
-        debugger 
         board
     end 
 
@@ -66,8 +52,29 @@ class Board
         end 
         value == 0 ? "_" : value 
     end 
-           
 
+    def self.create_tiles(board)
+        tiles = board.map do |row|
+                 row.map {|ele| Tile.new(ele)}
+        end 
+        tiles
+    end 
+
+    def initialize(size)
+        @grid = Board.create_grid(size)
+        @tiles = Board.create_tiles(@grid)
+    end 
+
+    def [](pos)
+        x, y = pos 
+        @grid[x][y]
+    end 
+
+    
+           
+private
+
+attr_reader :grid, :tiles 
 
 
 end 
