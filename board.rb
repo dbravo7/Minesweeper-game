@@ -63,11 +63,20 @@ class Board
     def initialize(size)
         @grid = Board.create_grid(size)
         @tiles = Board.create_tiles(@grid)
+        render 
+        debugger 
     end 
 
     def [](pos)
         x, y = pos 
         @grid[x][y]
+    end 
+
+    def render
+        puts "  #{(0..8).to_a.join(" ")}"
+        @grid.each_with_index do |row, i|
+            puts "#{i} #{row.join(" ")}"
+        end 
     end 
 
     
