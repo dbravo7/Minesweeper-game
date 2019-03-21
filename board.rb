@@ -30,9 +30,43 @@ class Board
                 num_of_bombs -= 1
             end 
         end  
-        bomb_grid
+        Board.nums_dashes_to_grid(bomb_grid)
     end 
 
+    def self.nums_dashes_to_grid(populated_grid)
+        board = populated_grid
+        # if r, c, and d surrounding position does not equal "*" then p = "_"
+        # if r, c, or d has "*" then ticker adds 1 and position equals ticker 
+        board.each_with_index do |subArr, row|
+            subArr.each_with_index do |ele, col|
+                if board[row][col] != "*"
+                    value = Board.check_surrounding_squares(board, [row, col])
+                    board[row][col] = value
+                end 
+            end 
+        end 
+        debugger 
+        board
+    end 
+
+    def self.check_surrounding_squares(board, pos)
+        x, y = pos 
+        value = 0
+        x_coor = [1,0,-1,-1,0,0,1,1]
+        y_coor = [0,1,0,0,-1,-1,0,0]
+
+        x_coor.zip(y_coor) do |pos_x, pos_y|
+            if x + pos_x < board.length &&
+                 y + pos_y < board.length &&
+                  x + pos_x >= 0 &&
+                   y + pos_y >= 0 &&
+                    board[x+pos_x][y+pos_y] == "*"
+                value += 1
+            end 
+        end 
+        value == 0 ? "_" : value 
+    end 
+           
 
 
 
