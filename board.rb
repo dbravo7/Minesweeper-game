@@ -1,3 +1,4 @@
+require 'colorize'
 require "byebug"
 require_relative "tile"
 
@@ -15,7 +16,7 @@ class Board
         while num_of_bombs >= 1
             x, y = [rand(0..8), rand(0..8)]
             if  bomb_grid[x][y] == nil
-                bomb_grid[x][y] = "*"
+                bomb_grid[x][y] = Tile.new("*")
                 num_of_bombs -= 1
             end 
         end  
@@ -38,9 +39,9 @@ class Board
     def self.check_surrounding_squares(board, pos)
         x, y = pos 
         value = 0
-        x_coor = [1,0,-1,-1,0,0,1,1]
-        y_coor = [0,1,0,0,-1,-1,0,0]
-
+        x_coor = [1,1,0,-1,-1,-1,0,1]
+        y_coor = [0,1,1,1,0,-1,-1,-1]
+         
         x_coor.zip(y_coor) do |pos_x, pos_y|
             if x + pos_x < board.length &&
                  y + pos_y < board.length &&
@@ -50,19 +51,12 @@ class Board
                 value += 1
             end 
         end 
-        value == 0 ? "_" : value 
+        value == 0 ? Tile.new("_") : Tile.new(value) 
     end 
 
-    def self.create_tiles(board)
-        tiles = board.map do |row|
-                 row.map {|ele| Tile.new(ele)}
-        end 
-        tiles
-    end 
-
+# --------------------------------------------------------------
     def initialize(size)
         @grid = Board.create_grid(size)
-        @tiles = Board.create_tiles(@grid)
         render 
         debugger 
     end 
@@ -73,9 +67,10 @@ class Board
     end 
 
     def render
-        puts "  #{(0..8).to_a.join(" ")}"
+        system("clear")
+        puts "  #{(0..8).to_a.join(" ").colorize(:light_cyan).underline}"
         @grid.each_with_index do |row, i|
-            puts "#{i} #{row.join(" ")}"
+            puts "#{i}".colorize(:light_cyan) + "|" + "#{row.join(" ")}"
         end 
     end 
 
