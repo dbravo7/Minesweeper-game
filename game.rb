@@ -1,4 +1,5 @@
 require "byebug"
+require 'colorize'
 require_relative "board"
 require_relative "player"
 
@@ -20,14 +21,11 @@ attr_reader :player, :board
 
     def play_turn
         @board.render 
-        pos = get_pos #coordinate 
-        val = get_val #f, u, r
-        # whether the position is a bomb and then game over
-        board.game_over?(pos)
-        # whether the position is now flagged and how many flags left
-        board.flagged?
-        # whether position is now unflagged 
-        # reveal position 
+        pos = get_pos  
+        val = get_val 
+        game_over?(pos)
+        board.a_flag?(pos, val)
+        board.reveal(pos,val)
     end 
 
     def get_pos
@@ -47,26 +45,46 @@ attr_reader :player, :board
     end 
 
     def position_valid?(pos)
-        coord = pos.split(",")
-        if coord.length != 2
-            player.prompt_invalid_pos
-            return false
+      coord = pos.split(",")
+      if coord.length != 2
+        player.prompt_invalid_pos
+        return false
+      end 
+      formatted_pos = []
+      coord.each do |ele|
+        if !(/[0-8]/.match?(ele)) || ele.length > 1
+          player.prompt_invalid_pos
+          return false 
+        else 
+          formatted_pos << ele 
         end 
-        formatted_pos = []
-        coord.each do |ele|
-            if !(/[0-8]/.match?(ele)) || ele.length > 1
-                player.prompt_invalid_pos
-                return false 
-            else 
-                formatted_pos << ele 
-            end 
-        end 
-        formatted_pos
+      end 
+      formatted_pos
     end 
 
     def value_valid?(val)
-        valid_choices = "rfu"
-        val.length == 1 && valid_choices.include?(val.downcase)
+      valid_choices = "rfu"
+      val.length == 1 && valid_choices.include?(val.downcase)
+    end 
+
+    def game_over?(pos)
+      if board.a_bomb?(pos)
+        raise "Oh, that is a bomb. You lose. Better luck next time".colorize(:light_blue ).colorize( :background => :red).bold 
+      end 
+    end 
+
+    def a_flag?(pos, val)
+      if val.downcase == "f" && board.flagged?(pos,val)
+        puts "A flag is already at that location. To unflag use 'u'"
+        sleep(2.3)
+        play_turn
+      else
+        board.flag(pos, val)
+      end 
+
+      if val.downcase == "u" && board.flagged?(pos,val)
+        board.unflag(pos,val)
+      end 
     end 
 
 

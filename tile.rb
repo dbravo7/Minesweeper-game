@@ -37,11 +37,9 @@ class Tile
     end 
 
     def to_s
-        revealed? ? @value.to_s : "?"
+        return "F" if flagged? else revealed? ? @value.to_s : "?"
     end 
 
-
-    attr_reader :flagged, :revealed
-    attr_accessor :value, :bomb
+    attr_accessor :value, :bomb, :flagged, :revealed
 
 end 
