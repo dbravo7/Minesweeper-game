@@ -10,22 +10,26 @@ attr_reader :player, :board
     def initialize(name, size)
         @player = Player.new(name)
         @board = Board.new(size)
-        debugger 
         run_game 
     end 
 
     def run_game
-        play_turn until board.game_won?
-        puts "Congratulations, you won!!!"
+      play_turn until board.game_won?
+        puts "Congratulations, you won!!!".colorize(:light_blue)on_white
     end 
 
     def play_turn
-        @board.render 
-        pos = get_pos  
-        val = get_val 
-        game_over?(pos)
-        board.a_flag?(pos, val)
-        board.reveal(pos,val)
+      @board.render 
+      pos = get_pos  
+      val = get_val 
+    # debugger 
+        if val == "f" || val == "u"
+          a_flag?(pos, val)
+        else 
+          board.reveal(pos,val)
+          @board.render 
+          game_over?(pos, val)
+        end 
     end 
 
     def get_pos
@@ -34,7 +38,7 @@ attr_reader :player, :board
             @board.render 
             pos = player.get_pos
         end
-        pos  
+        pos.map {|num| Integer(num)}  
     end 
 
     def get_val 
@@ -42,24 +46,22 @@ attr_reader :player, :board
         until val && value_valid?(val)
             val = player.get_val
         end
+        val.downcase
     end 
 
     def position_valid?(pos)
-      coord = pos.split(",")
-      if coord.length != 2
+      if pos.length != 2
         player.prompt_invalid_pos
         return false
       end 
       formatted_pos = []
-      coord.each do |ele|
+      pos.each do |ele|
         if !(/[0-8]/.match?(ele)) || ele.length > 1
           player.prompt_invalid_pos
           return false 
-        else 
-          formatted_pos << ele 
         end 
       end 
-      formatted_pos
+      true 
     end 
 
     def value_valid?(val)
@@ -67,23 +69,27 @@ attr_reader :player, :board
       val.length == 1 && valid_choices.include?(val.downcase)
     end 
 
-    def game_over?(pos)
-      if board.a_bomb?(pos)
+    def game_over?(pos, val)
+      if board.a_bomb?(pos) && val != "f" && val != "u"
         raise "Oh, that is a bomb. You lose. Better luck next time".colorize(:light_blue ).colorize( :background => :red).bold 
       end 
     end 
 
     def a_flag?(pos, val)
-      if val.downcase == "f" && board.flagged?(pos,val)
+      if val == "u" && board.flagged?(pos,val) && !(board.num_of_flags == board.num_of_bombs)
+        board.unflag(pos,val)
+      end 
+
+      if val == "f" && board.flagged?(pos,val)
         puts "A flag is already at that location. To unflag use 'u'"
         sleep(2.3)
         play_turn
-      else
+      elsif val == "f" && board.num_of_flags == 0
+        puts "There are no more flags. Unflag a location first to have a flag for use"
+        sleep(2.3)
+        play_turn 
+      elsif val == "f" && board.num_of_flags > 0
         board.flag(pos, val)
-      end 
-
-      if val.downcase == "u" && board.flagged?(pos,val)
-        board.unflag(pos,val)
       end 
     end 
 

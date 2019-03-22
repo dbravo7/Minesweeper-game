@@ -21,12 +21,16 @@ class Player
 
     def get_pos
         prompt_pos
-        gets.chomp
+        parse(gets.chomp)
     end 
 
     def get_val
         prompt_val
         gets.chomp
+    end 
+
+    def parse(pos)
+      pos.split(",")      
     end 
 
 end

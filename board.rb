@@ -6,6 +6,7 @@ class Board
 
     def initialize(size)
       @num_of_flags = ((size * size) * 0.123).round
+      @num_of_bombs = @num_of_flags.dup 
       @grid = populate_grid(size)
     end 
 
@@ -35,23 +36,63 @@ class Board
     def a_bomb?(pos)
       self[pos].bomb?
     end 
+    
+    def num_of_flags
+      @num_of_flags
+    end 
+
+    def num_of_bombs
+      @num_of_bombs
+    end 
 
     def flagged?(pos, val)
       self[pos].flagged? 
     end 
 
     def flag(pos, val)
-      self[pos].flag
+      self[pos].flag 
+      @num_of_flags -= 1 
     end 
 
     def unflag(pos, val)
       self[pos].unflag
+      @num_of_flags += 1
+    end 
+
+    def flag_count_subtract
+        @num_of_flags -= 1
     end 
 
     def reveal(pos, val)
-      #if flagged do not reveal
-      #if a number only reveal that tile
-      #if '_' reveal surrounding tiles not at a diagnol that have the same value 
+      if self[pos].flagged?
+        puts "A position that is flagged cannot be revealed until it is first unflagged using 'u'"
+        sleep(2.3)
+        play_turn
+      end 
+      
+      if self[pos].value != "_"
+        self[pos].reveal
+      elsif self[pos].value == "_"
+        self[pos].reveal 
+        domino_reveal(pos)
+      end 
+    end  
+    
+    def domino_reveal(pos)
+        # return @grid[pos].reveal if i == 0 
+      x, y = pos
+      x_coor = [1,0,-1,0]
+      y_coor = [0,1,0,-1]
+      x_coor.zip(y_coor) do |pos_x, pos_y|
+        if x + pos_x < @grid.length && y + pos_y < @grid.length &&
+             x + pos_x >= 0 &&  y + pos_y >= 0 &&
+              !@grid[x+pos_x][y+pos_y].flagged? &&
+               @grid[x+pos_x][y+pos_y].value != "*"
+            @grid[x+pos_x][y+pos_y].reveal
+            # domino_reveal(@grid[x+pos_x, y+pos_y], i -= 1)
+        end 
+      end   
+    end 
 
     def game_won?
       @grid.each_with_index do |subArr, x|
