@@ -5,9 +5,8 @@ require_relative "tile"
 class Board
 
     def initialize(size)
-        @grid = Array.new(size) {Array.new(size)}
-        @num_of_bombs = ((size * size) * 0.123).round 
-        populate_grid
+        @num_of_flags = ((size * size) * 0.123).round
+        @grid = populate_grid(size)
         render 
         debugger 
     end 
@@ -24,6 +23,11 @@ class Board
 
     def render
         system("clear")
+            if @num_of_flags == 1
+                puts  "#{@num_of_flags}".colorize(:red) + " Flag".bold
+            else
+                puts "#{@num_of_flags}".colorize(:red) + " Flags".bold
+            end 
         puts "  #{(0..8).to_a.join(" ").colorize(:light_cyan).underline}"
         @grid.each_with_index do |row, i|
             puts "#{i}".colorize(:light_cyan) + "|" + "#{row.join(" ")}"
@@ -31,34 +35,36 @@ class Board
     end 
 
     def game_won?
-        # all squares besides bombs are revealed
         @grid.each_with_index do |subArr, x|
             subArr.each_with_index do |ele, y|
                 if @grid[x][y] != "*" && !@grid[x][y].revealed?  
-                    false
+                    return false
                 end 
             end 
         end 
         true
     end 
 
-        end 
-    end 
-
-    def populate_grid
+    def populate_grid(size)
+        @grid = form_grid(size) 
         rand_bomb_placement(@grid)
         debugger 
         nums_dashes_to_grid(@grid)
     end 
 
+    def form_grid(size)
+        Array.new(size) do 
+            Array.new(size) {|ele| Tile.new}
+        end 
+    end 
+
     def rand_bomb_placement(bomb_grid) 
         size = bomb_grid.length
-        bombs = @num_of_bombs.dup  
-        debugger 
+        bombs = @num_of_flags  
         while bombs >= 1
             x, y = [rand(0..8), rand(0..8)]
-            if  bomb_grid[x][y] == nil
-                bomb_grid[x][y] = Tile.new("*")
+            if  bomb_grid[x][y].value == nil
+                bomb_grid[x][y].value = "*"
                 bombs -= 1
             end 
         end  
@@ -66,12 +72,11 @@ class Board
 
     def nums_dashes_to_grid(populated_grid)
         board = populated_grid
-        debugger 
         board.each_with_index do |subArr, x|
             subArr.each_with_index do |ele, y|
-                if board[x][y] != "*"
+                if !board[x][y].bomb?
                     value = check_surrounding_squares(board, [x, y])
-                    board[x][y] = value
+                    board[x][y].value = value
                 end 
             end 
         end 
@@ -88,11 +93,11 @@ class Board
                  y + pos_y < board.length &&
                   x + pos_x >= 0 &&
                    y + pos_y >= 0 &&
-                    board[x+pos_x][y+pos_y] == "*"
+                    board[x+pos_x][y+pos_y].bomb? 
                 value += 1
             end 
         end 
-        value == 0 ? Tile.new("_") : Tile.new(value) 
+        value == 0 ? "_" : value 
     end 
            
 private

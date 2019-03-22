@@ -2,15 +2,18 @@ require 'colorize'
 
 class Tile
 
-    def initialize(square)
-        @value = square
-        @bomb = square == "*" ? true : false 
+    def initialize
+        @value = nil 
         @revealed = false 
         @flagged = false 
     end 
 
+    def inspect
+        @value
+    end 
+
     def bomb?
-        @bomb
+        @bomb = @value == "*" ? true : false 
     end 
 
     def flagged?
@@ -33,13 +36,12 @@ class Tile
         @revealed
     end 
 
-    def to_value
-        revealed? ? @value : "?"
+    def to_s
+        revealed? ? @value.to_s : "?"
     end 
 
 
-
-    # have to check whether the tile is flagged
-    # will have to reveal the tile
+    attr_reader :flagged, :revealed
+    attr_accessor :value, :bomb
 
 end 
