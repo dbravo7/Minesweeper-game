@@ -4,39 +4,80 @@ require_relative "tile"
 
 class Board
 
-    def self.create_grid(size)
-        empty_grid = Array.new(size) {Array.new(size)}
-        Board.rand_bomb_placement(empty_grid)
+    def initialize(size)
+        @grid = Array.new(size) {Array.new(size)}
+        @num_of_bombs = ((size * size) * 0.123).round 
+        populate_grid
+        render 
+        debugger 
     end 
 
-    def self.rand_bomb_placement(bomb_grid) 
-        size = bomb_grid.length 
-        num_of_bombs = ((size * size) * 0.123).round 
-
-        while num_of_bombs >= 1
-            x, y = [rand(0..8), rand(0..8)]
-            if  bomb_grid[x][y] == nil
-                bomb_grid[x][y] = Tile.new("*")
-                num_of_bombs -= 1
-            end 
-        end  
-        Board.nums_dashes_to_grid(bomb_grid)
+    def [](pos)
+        x, y = pos 
+        @grid[x][y]
     end 
 
-    def self.nums_dashes_to_grid(populated_grid)
-        board = populated_grid
-        board.each_with_index do |subArr, row|
-            subArr.each_with_index do |ele, col|
-                if board[row][col] != "*"
-                    value = Board.check_surrounding_squares(board, [row, col])
-                    board[row][col] = value
+    def []=(pos, value)
+        x, y = pos
+        @grid[x][y] = value 
+    end 
+
+    def render
+        system("clear")
+        puts "  #{(0..8).to_a.join(" ").colorize(:light_cyan).underline}"
+        @grid.each_with_index do |row, i|
+            puts "#{i}".colorize(:light_cyan) + "|" + "#{row.join(" ")}"
+        end 
+    end 
+
+    def game_won?
+        # all squares besides bombs are revealed
+        @grid.each_with_index do |subArr, x|
+            subArr.each_with_index do |ele, y|
+                if @grid[x][y] != "*" && !@grid[x][y].revealed?  
+                    false
                 end 
             end 
         end 
-        board
+        true
     end 
 
-    def self.check_surrounding_squares(board, pos)
+        end 
+    end 
+
+    def populate_grid
+        rand_bomb_placement(@grid)
+        debugger 
+        nums_dashes_to_grid(@grid)
+    end 
+
+    def rand_bomb_placement(bomb_grid) 
+        size = bomb_grid.length
+        bombs = @num_of_bombs.dup  
+        debugger 
+        while bombs >= 1
+            x, y = [rand(0..8), rand(0..8)]
+            if  bomb_grid[x][y] == nil
+                bomb_grid[x][y] = Tile.new("*")
+                bombs -= 1
+            end 
+        end  
+    end 
+
+    def nums_dashes_to_grid(populated_grid)
+        board = populated_grid
+        debugger 
+        board.each_with_index do |subArr, x|
+            subArr.each_with_index do |ele, y|
+                if board[x][y] != "*"
+                    value = check_surrounding_squares(board, [x, y])
+                    board[x][y] = value
+                end 
+            end 
+        end 
+    end 
+
+    def check_surrounding_squares(board, pos)
         x, y = pos 
         value = 0
         x_coor = [1,1,0,-1,-1,-1,0,1]
@@ -53,32 +94,10 @@ class Board
         end 
         value == 0 ? Tile.new("_") : Tile.new(value) 
     end 
-
-# --------------------------------------------------------------
-    def initialize(size)
-        @grid = Board.create_grid(size)
-        render 
-        debugger 
-    end 
-
-    def [](pos)
-        x, y = pos 
-        @grid[x][y]
-    end 
-
-    def render
-        system("clear")
-        puts "  #{(0..8).to_a.join(" ").colorize(:light_cyan).underline}"
-        @grid.each_with_index do |row, i|
-            puts "#{i}".colorize(:light_cyan) + "|" + "#{row.join(" ")}"
-        end 
-    end 
-
-    
            
 private
 
-attr_reader :grid, :tiles 
+attr_reader :grid
 
 
 end 

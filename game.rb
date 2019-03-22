@@ -12,10 +12,14 @@ attr_reader :player, :board
         run_game 
     end 
 
+    
 
 
     def run_game
-        
+        play_turn unless game_won?
+        puts "Congratulations, you won!!!"
+    end 
+
 
 end 
 
