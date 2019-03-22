@@ -5,13 +5,18 @@ class Player
     end 
 
     def prompt_pos 
-        puts "Please enter coordinates for the tile you would like to reveal or place a flag on (e.g. 2,4)"
         puts ""
+        puts "Please enter coordinates for the tile you would like to reveal or place a flag on (e.g. 2,4)"
     end 
 
     def prompt_val
-        puts "Enter 'f' for flag, 'u' for unflag, or 'r' for reveal"
         puts ""
+        puts "Enter 'f' for flag, 'u' for unflag, or 'r' for reveal"
+    end 
+    
+    def prompt_invalid_pos
+        puts "Choose numbers between 0 and 8 and be sure to add a comma between the numbers"
+        sleep(2.3)
     end 
 
     def get_pos
