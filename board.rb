@@ -45,7 +45,7 @@ class Board
       @num_of_bombs
     end 
 
-    def flagged?(pos, val)
+    def flagged?(pos)
       self[pos].flagged? 
     end 
 
