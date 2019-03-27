@@ -1,6 +1,7 @@
 require "byebug"
 require 'colorize'
 require 'yaml'
+require 'benchmark'
 require_relative "board"
 require_relative "player"
 
@@ -17,13 +18,15 @@ attr_reader :player, :board
     def run_game
       play_turn until board.game_won?
         puts "Congratulations, you won!!!".colorize(:color=>light_blue, :background=>white)
+        timer 
     end 
 
     def play_turn
     debugger 
       @board.render 
       pos = get_pos  
-      val = get_val 
+      val = get_val
+      # timer  
         if val == "f" || val == "u"
           a_flag?(pos, val)
         else 
@@ -94,14 +97,18 @@ attr_reader :player, :board
       end 
     end 
 
-  def save_game
-    File.open("save_game.yaml",'w') {|f| YAML.dump([] << self, f)}
-  end 
+  # def save_game
+  #   File.open("save_game.yaml",'w') {|f| YAML.dump([] << self, f)}
+  # end 
 
-  def load_game
-    YAML.load_file("save_game.yaml")
-  end 
+  # def load_game
+  #   YAML.load_file("save_game.yaml").run_game
+  # end 
 
+#   def timer
+#     t = Time.at(0)
+#     puts "\nCompleted in #{(Time.at(0) - t)} seconds"
+#   end
 end 
 
 if $PROGRAM_NAME == __FILE__

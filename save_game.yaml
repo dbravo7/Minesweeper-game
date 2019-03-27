@@ -3,7 +3,7 @@
   player: !ruby/object:Player
     name: David
   board: !ruby/object:Board
-    num_of_flags: 7
+    num_of_flags: 8
     num_of_bombs: 10
     grid:
     - - !ruby/object:Tile
@@ -12,27 +12,17 @@
         flagged: false
         bomb: false
       - !ruby/object:Tile
-        value: _
+        value: 1
         revealed: false
         flagged: false
         bomb: false
       - !ruby/object:Tile
-        value: _
+        value: 1
         revealed: false
         flagged: false
         bomb: false
       - !ruby/object:Tile
-        value: _
-        revealed: false
-        flagged: false
-        bomb: false
-      - !ruby/object:Tile
-        value: _
-        revealed: false
-        flagged: false
-        bomb: false
-      - !ruby/object:Tile
-        value: _
+        value: 1
         revealed: false
         flagged: false
         bomb: false
@@ -46,42 +36,22 @@
         revealed: false
         flagged: false
         bomb: false
+      - !ruby/object:Tile
+        value: 2
+        revealed: false
+        flagged: false
+        bomb: false
+      - !ruby/object:Tile
+        value: "*"
+        revealed: false
+        flagged: false
+        bomb: true
       - !ruby/object:Tile
         value: 1
         revealed: false
         flagged: false
         bomb: false
     - - !ruby/object:Tile
-        value: _
-        revealed: false
-        flagged: false
-        bomb: false
-      - !ruby/object:Tile
-        value: _
-        revealed: false
-        flagged: false
-        bomb: false
-      - !ruby/object:Tile
-        value: _
-        revealed: false
-        flagged: false
-        bomb: false
-      - !ruby/object:Tile
-        value: _
-        revealed: false
-        flagged: false
-        bomb: false
-      - !ruby/object:Tile
-        value: _
-        revealed: false
-        flagged: true
-        bomb: false
-      - !ruby/object:Tile
-        value: _
-        revealed: false
-        flagged: false
-        bomb: false
-      - !ruby/object:Tile
         value: _
         revealed: false
         flagged: false
@@ -96,58 +66,13 @@
         revealed: false
         flagged: false
         bomb: true
-    - - !ruby/object:Tile
-        value: _
-        revealed: false
-        flagged: false
-        bomb: false
-      - !ruby/object:Tile
-        value: _
-        revealed: false
-        flagged: false
-        bomb: false
       - !ruby/object:Tile
         value: 1
-        revealed: false
-        flagged: false
-        bomb: false
-      - !ruby/object:Tile
-        value: 1
-        revealed: false
-        flagged: false
-        bomb: false
-      - !ruby/object:Tile
-        value: 1
-        revealed: false
-        flagged: true
-        bomb: false
-      - !ruby/object:Tile
-        value: _
         revealed: false
         flagged: false
         bomb: false
       - !ruby/object:Tile
         value: _
-        revealed: false
-        flagged: false
-        bomb: false
-      - !ruby/object:Tile
-        value: 1
-        revealed: false
-        flagged: false
-        bomb: false
-      - !ruby/object:Tile
-        value: 1
-        revealed: false
-        flagged: false
-        bomb: false
-    - - !ruby/object:Tile
-        value: 1
-        revealed: false
-        flagged: false
-        bomb: false
-      - !ruby/object:Tile
-        value: 1
         revealed: false
         flagged: false
         bomb: false
@@ -164,6 +89,36 @@
       - !ruby/object:Tile
         value: 2
         revealed: false
+        flagged: false
+        bomb: false
+      - !ruby/object:Tile
+        value: 1
+        revealed: false
+        flagged: false
+        bomb: false
+    - - !ruby/object:Tile
+        value: _
+        revealed: false
+        flagged: false
+        bomb: false
+      - !ruby/object:Tile
+        value: 1
+        revealed: false
+        flagged: false
+        bomb: false
+      - !ruby/object:Tile
+        value: 1
+        revealed: false
+        flagged: false
+        bomb: false
+      - !ruby/object:Tile
+        value: 1
+        revealed: false
+        flagged: false
+        bomb: false
+      - !ruby/object:Tile
+        value: _
+        revealed: false
         flagged: true
         bomb: false
       - !ruby/object:Tile
@@ -177,20 +132,25 @@
         flagged: false
         bomb: false
       - !ruby/object:Tile
-        value: _
+        value: 2
         revealed: false
         flagged: false
         bomb: false
       - !ruby/object:Tile
-        value: _
+        value: 1
         revealed: false
         flagged: false
         bomb: false
     - - !ruby/object:Tile
-        value: "*"
+        value: _
         revealed: false
         flagged: false
-        bomb: true
+        bomb: false
+      - !ruby/object:Tile
+        value: _
+        revealed: false
+        flagged: false
+        bomb: false
       - !ruby/object:Tile
         value: 1
         revealed: false
@@ -198,6 +158,36 @@
         bomb: false
       - !ruby/object:Tile
         value: 1
+        revealed: false
+        flagged: false
+        bomb: false
+      - !ruby/object:Tile
+        value: 1
+        revealed: false
+        flagged: true
+        bomb: false
+      - !ruby/object:Tile
+        value: _
+        revealed: false
+        flagged: false
+        bomb: false
+      - !ruby/object:Tile
+        value: _
+        revealed: false
+        flagged: false
+        bomb: false
+      - !ruby/object:Tile
+        value: 1
+        revealed: false
+        flagged: false
+        bomb: false
+      - !ruby/object:Tile
+        value: "*"
+        revealed: false
+        flagged: false
+        bomb: true
+    - - !ruby/object:Tile
+        value: _
         revealed: false
         flagged: false
         bomb: false
@@ -231,11 +221,31 @@
         revealed: false
         flagged: false
         bomb: false
-    - - !ruby/object:Tile
+      - !ruby/object:Tile
         value: 2
         revealed: false
         flagged: false
         bomb: false
+      - !ruby/object:Tile
+        value: 1
+        revealed: false
+        flagged: false
+        bomb: false
+    - - !ruby/object:Tile
+        value: _
+        revealed: false
+        flagged: false
+        bomb: false
+      - !ruby/object:Tile
+        value: 1
+        revealed: false
+        flagged: false
+        bomb: false
+      - !ruby/object:Tile
+        value: "*"
+        revealed: false
+        flagged: false
+        bomb: true
       - !ruby/object:Tile
         value: 3
         revealed: false
@@ -252,41 +262,6 @@
         flagged: false
         bomb: false
       - !ruby/object:Tile
-        value: 1
-        revealed: false
-        flagged: false
-        bomb: false
-      - !ruby/object:Tile
-        value: 1
-        revealed: false
-        flagged: false
-        bomb: false
-      - !ruby/object:Tile
-        value: 1
-        revealed: false
-        flagged: false
-        bomb: false
-      - !ruby/object:Tile
-        value: 1
-        revealed: false
-        flagged: false
-        bomb: false
-      - !ruby/object:Tile
-        value: "*"
-        revealed: false
-        flagged: false
-        bomb: true
-    - - !ruby/object:Tile
-        value: 1
-        revealed: false
-        flagged: false
-        bomb: false
-      - !ruby/object:Tile
-        value: "*"
-        revealed: false
-        flagged: false
-        bomb: true
-      - !ruby/object:Tile
         value: "*"
         revealed: false
         flagged: false
@@ -301,33 +276,13 @@
         revealed: false
         flagged: false
         bomb: false
-      - !ruby/object:Tile
-        value: 1
-        revealed: false
-        flagged: false
-        bomb: false
-      - !ruby/object:Tile
-        value: 1
-        revealed: false
-        flagged: false
-        bomb: false
-      - !ruby/object:Tile
-        value: 2
-        revealed: false
-        flagged: false
-        bomb: false
-      - !ruby/object:Tile
-        value: 1
-        revealed: false
-        flagged: false
-        bomb: false
     - - !ruby/object:Tile
-        value: 2
+        value: 1
         revealed: false
         flagged: false
         bomb: false
       - !ruby/object:Tile
-        value: 4
+        value: 2
         revealed: false
         flagged: false
         bomb: false
@@ -337,12 +292,12 @@
         flagged: false
         bomb: false
       - !ruby/object:Tile
-        value: 2
+        value: "*"
         revealed: false
         flagged: false
-        bomb: false
+        bomb: true
       - !ruby/object:Tile
-        value: _
+        value: 1
         revealed: false
         flagged: false
         bomb: false
@@ -352,10 +307,10 @@
         flagged: false
         bomb: false
       - !ruby/object:Tile
-        value: "*"
+        value: 1
         revealed: false
         flagged: false
-        bomb: true
+        bomb: false
       - !ruby/object:Tile
         value: 1
         revealed: false
@@ -367,12 +322,67 @@
         flagged: false
         bomb: false
     - - !ruby/object:Tile
+        value: 1
+        revealed: false
+        flagged: false
+        bomb: false
+      - !ruby/object:Tile
         value: "*"
         revealed: false
         flagged: false
         bomb: true
       - !ruby/object:Tile
         value: 2
+        revealed: false
+        flagged: false
+        bomb: false
+      - !ruby/object:Tile
+        value: 2
+        revealed: false
+        flagged: false
+        bomb: false
+      - !ruby/object:Tile
+        value: 2
+        revealed: false
+        flagged: false
+        bomb: false
+      - !ruby/object:Tile
+        value: 1
+        revealed: false
+        flagged: false
+        bomb: false
+      - !ruby/object:Tile
+        value: _
+        revealed: false
+        flagged: false
+        bomb: false
+      - !ruby/object:Tile
+        value: _
+        revealed: false
+        flagged: false
+        bomb: false
+      - !ruby/object:Tile
+        value: _
+        revealed: false
+        flagged: false
+        bomb: false
+    - - !ruby/object:Tile
+        value: 1
+        revealed: false
+        flagged: false
+        bomb: false
+      - !ruby/object:Tile
+        value: 1
+        revealed: false
+        flagged: false
+        bomb: false
+      - !ruby/object:Tile
+        value: 1
+        revealed: false
+        flagged: false
+        bomb: false
+      - !ruby/object:Tile
+        value: 1
         revealed: false
         flagged: false
         bomb: false
@@ -392,17 +402,7 @@
         flagged: false
         bomb: false
       - !ruby/object:Tile
-        value: 1
-        revealed: false
-        flagged: false
-        bomb: false
-      - !ruby/object:Tile
-        value: 1
-        revealed: false
-        flagged: false
-        bomb: false
-      - !ruby/object:Tile
-        value: 1
+        value: _
         revealed: false
         flagged: false
         bomb: false
